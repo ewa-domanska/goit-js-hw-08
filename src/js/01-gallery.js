@@ -1,37 +1,20 @@
 import {galleryItems} from './gallery-items.js';
+// Change code below this line
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-// Change code below this line
+
 
 let html = "";
 let gallery = document.querySelector(".gallery")
 for (const galleryItem of galleryItems) {
-  html = html + `<div class="gallery__item">
-  <a class="gallery__link" href="">
-    <img
-      class="gallery__image"
-      src="${galleryItem.preview}"
-      data-source="${galleryItem.original}"
-      alt="${galleryItem.description}"
-    />
-  </a>
-</div>`
+  html = html + `<a class="gallery__item" href="${galleryItem.original}">
+  <img class="gallery__image" src="${galleryItem.preview}" alt="${galleryItem.description}" />
+</a>`
 }
 
 gallery.innerHTML = html;
 
-function showBigPicture(e) {
-  e.preventDefault();
-  let image = e.target;
-  const bigPictureModal = SimpleLightbox.create(`<img src="${image.dataset.source}"/>`)
-
-  bigPictureModal.show();
-
-  gallery.addEventListener("keydown", (e) => {
-    if (e.keyCode === 27) {
-      bigPictureModal.close();
-    }
-  })
-}
-
-gallery.addEventListener("click", showBigPicture);
+new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+  captionsData: "alt"
+});
