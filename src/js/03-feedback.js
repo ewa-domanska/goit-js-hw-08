@@ -1,9 +1,16 @@
 let form = document.querySelector(".feedback-form");
+let emailInput = form.querySelector("input");
+let messageInput = form.querySelector("textarea");
+let button = form.querySelector("button");
+
+let oldObject = localStorage.getItem("feedback-form-state");
+let email = oldObject ? JSON.parse(oldObject).email : "";
+let message = oldObject ? JSON.parse(oldObject).message : "";
+
+emailInput.value = email
+messageInput.value = message
 
 form.addEventListener("input", (e) => {
-  let oldObject = localStorage.getItem("feedback-form-state");
-  let email = oldObject ? JSON.parse(oldObject).email : "";
-  let message = oldObject ? JSON.parse(oldObject).message : "";
   if (e.target.name === "email") {
     email = e.target.value;
   } else {
@@ -17,20 +24,8 @@ form.addEventListener("input", (e) => {
   localStorage.setItem("feedback-form-state", JSON.stringify(object));
 })
 
-let oldObject = localStorage.getItem("feedback-form-state");
-let email = oldObject ? JSON.parse(oldObject).email : "";
-let message = oldObject ? JSON.parse(oldObject).message : "";
-
-let emailInput = form.querySelector("input");
-let messageInput = form.querySelector("textarea");
-
-emailInput.value = email
-messageInput.value = message
-
-
-let button = form.querySelector("button");
 button.addEventListener("click", (e) => {
-  console.log()
+  console.log(localStorage.getItem("feedback-form-state"));
   localStorage.removeItem("feedback-form-state");
   emailInput.value = "";
   messageInput.value = "";
